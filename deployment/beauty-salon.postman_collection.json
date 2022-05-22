@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "67437dd3-85f6-4fda-ac13-6043896efa62",
+		"name": "beauty-salon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "155692"
+	},
+	"item": [
+		{
+			"name": "Get master by service",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ajax/master/service/:serviceId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ajax",
+						"master",
+						"service",
+						":serviceId"
+					],
+					"variable": [
+						{
+							"key": "serviceId",
+							"value": "66c28d59-5159-4067-a85d-a4cf775d899f"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get master schedule",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ajax/master/:masterId/schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ajax",
+						"master",
+						":masterId",
+						"schedule"
+					],
+					"variable": [
+						{
+							"key": "masterId",
+							"value": "06f472d3-3535-494e-ab9c-215da67bb8b3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

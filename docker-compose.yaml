@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgre:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '6432:5432'
+    volumes:
+      - $PWD/deployment/db/beauty-salon.sql:/docker-entrypoint-initdb.d/00_init_beauty-salon.sql
+      - postgre:/var/lib/postgresql/data
+volumes:
+  postgre:
+    driver: local

@@ -1,0 +1,9 @@
+<div class="user-info justify-content-end">
+  {{^userAuthenticated}}
+  <a class="btn btn-outline-success" href="/login">Войти</a>
+  {{/userAuthenticated}}
+  {{#userAuthenticated}}
+
+  <a class="btn btn-outline-danger" href="/logout">Выйти</a>
+  {{/userAuthenticated}}
+</div>

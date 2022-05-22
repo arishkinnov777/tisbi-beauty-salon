@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{{>layout/header}}
+
+<body>
+<div class="container">
+
+  {{>layout/header-visible}}
+
+  {{>layout/beradcrumbs}}
+
+  <div class="form-group mt-3">
+    <h2>Новая запись на {{service.title}}</h2>
+    <p>{{service.description}}</p>
+    <form name="order-form" action="/order/" method="post">
+      <input id="service-id" type="hidden" name="service_id" value="{{service.id}}"/>
+
+      <div class="mb-3">
+        <label class="form-check-label" for="customer_name">Как к вам обращаться?</label>
+        <input class="form-control" id="customer_name" name="customer_name"
+               placeholder="Ваше имя"/>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-check-label" for="customer_email">На какой email прислать информацию о записи?</label>
+        <input class="form-control" id="customer_email" name="customer_email"
+               placeholder="Ваш email"/>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-check-label" for="customer_phone">На какой телефон позвонить с информацией о записи?</label>
+        <input class="form-control" id="customer_phone" name="customer_phone"
+               placeholder="Ваш телефон"/>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-check-label" for="master_id">Выбери мастера, к которому хочешь записаться:</label>
+        <select data-placeholder="Выберите мастера..." id="master_id" class="form-control form-control-lg" name="master_id">
+          {{#masters}}
+          <option name="{{id}}" value="{{id}}">{{name}}</option>
+          {{/masters}}
+          {{^masters}}
+          <option disabled>Нет подходящих мастеров :(</option>
+          {{/masters}}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-check-label" for="master_schedule_id">Выбери удобный таймслот у мастера:</label>
+        <select data-placeholder="Выберите время для записи..." id="master_schedule_id" class="form-control form-control-lg" name="master_schedule_id">
+          {{#schedules}}
+          <option name="{{id}}" value="{{name}}">{{name}}</option>
+          {{/schedules}}
+          {{^schedules}}
+          <option disabled>Этот мастер на расхват, выбери другого :(</option>
+          {{/schedules}}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Записаться</button>
+        <a href="/" class="btn btn-danger">Отменить</a>
+      </div>
+    </form>
+    <script type="text/javascript">
+      $(function () {
+        var masterSelect = $("#master_id");
+        var masterScheduleSelect = $("#master_schedule_id");
+        masterSelect.chosen({width: "100%", height: "50px", no_results_text: "Oops, nothing found!"});
+        masterScheduleSelect.chosen({width: "100%", height: "50px", no_results_text: "Oops, nothing found!"});
+        processChangeFilter(masterSelect.chosen().val());
+
+        masterSelect.chosen().change(function(e) {
+          processChangeFilter(masterSelect.chosen().val());
+        });
+
+        function processChangeFilter(masterId) {
+          $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/ajax/master/" + masterId + "/schedule",
+            data: "",
+            complete: function(data) {
+              masterScheduleSelect.chosen('destroy');
+              masterScheduleSelect.empty();
+              for (var i in data.responseJSON) {
+                masterScheduleSelect.append('<option name=' + data.responseJSON[i].id + ' value=' + data.responseJSON[i].id + '>' + data.responseJSON[i].date + ' c ' + data.responseJSON[i].timeStart + ' по ' + data.responseJSON[i].timeStop + '</option></option>')
+              }
+              masterScheduleSelect.chosen();
+            }
+          });
+        }
+
+      })
+    </script>
+  </div>
+</div>
+</body>
+
+</html>

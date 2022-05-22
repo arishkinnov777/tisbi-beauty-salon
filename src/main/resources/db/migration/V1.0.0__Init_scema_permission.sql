@@ -1,0 +1,1 @@
+grant usage on schema salon to beauty_salon_application;

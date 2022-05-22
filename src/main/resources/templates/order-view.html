@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{{>layout/header}}
+
+<body>
+<div class="container">
+
+  {{>layout/header-visible}}
+
+  {{>layout/beradcrumbs}}
+  <div class="container clearfix mt-3">
+    <div class="row">
+      <div class="col">
+        <p>
+          Вы оформили предварительную запись <strong>#{{order.id}}</strong> от <strong>{{order.formatedDateCreate}}</strong>
+          на сумму от <strong>{{order.price}} рублей</strong>.<br/>
+          Уже скоро с вами свяжется наш администратор, и уточнит все детали.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>
+          Сразу после подтверждения заказа, мы забронируем время мастера в указанное вами время
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container clearfix mt-5">
+    <div class="row">
+      <div class="col">
+        <h3>Информация о мастере</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <strong>С вами будет работать мастер:</strong>
+      </div>
+      <div class="col-9">
+        {{order.schedule.master.name}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <strong>Когда:</strong>
+      </div>
+      <div class="col-9">
+        {{order.schedule.dateFormatted}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <strong>Во сколько:</strong>
+      </div>
+      <div class="col-9">
+        {{order.schedule.timeStartFormatted}}
+      </div>
+    </div>
+  </div>
+
+  <div class="container clearfix mt-5">
+    <div class="row">
+      <div class="col">
+        <h3>Информация о услуге</h3>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <strong>Что будем делать:</strong>
+        </div>
+        <div class="col-9">
+          {{order.service.title}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <strong>Как долго обычно идет процедура:</strong>
+        </div>
+        <div class="col-9">
+          {{order.service.durationFormatted}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container clearfix mt-5">
+    <div class="row">
+      <div class="col">
+        <h3>Информация о вас</h3>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <strong>Кто придет:</strong>
+        </div>
+        <div class="col-9">
+          {{order.customer.name}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <strong>Когда:</strong>
+        </div>
+        <div class="col-9">
+          {{order.schedule.dateFormatted}} в {{order.schedule.timeStartFormatted}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <strong>Телефон для связи:</strong>
+        </div>
+        <div class="col-9">
+          {{order.customer.phone}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <strong>Email для связи:</strong>
+        </div>
+        <div class="col-9">
+          {{order.customer.email}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

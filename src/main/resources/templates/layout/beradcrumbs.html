@@ -1,0 +1,18 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {{#pages}}
+          {{^active}}
+          <li class="breadcrumb-item"><a href="{{href}}">{{title}}</a></li>
+          {{/active}}
+          {{#active}}
+          <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+          {{/active}}
+          {{/pages}}
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>

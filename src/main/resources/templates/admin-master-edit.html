@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{{>layout/header}}
+
+<body>
+<div class="container">
+
+  {{>layout/header-visible}}
+
+  <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+      <div class="navbar-brand">Панель администратора [{{userDetails}}]</div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a href="/admin/" class="nav-link">Заказы</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/master" class="nav-link active">Мастера</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/reports" class="nav-link">Отчеты</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              Кабинет мастера
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/master/">Заказы</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="container-fluid">
+          <a class="btn btn-outline-success" href="/admin/master/add">Добавить</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {{>layout/beradcrumbs}}
+
+  <div class="form-group mt-3">
+    <h2>Изменить мастера [{{master.userAccount.username}}]</h2>
+    <form name="order-form" action="/admin/master/{{master.id}}/update" method="post">
+
+      <div class="mb-3">
+          <label class="form-check-label" for="fullName">Имя:</label>
+          <input class="form-control"  type="text" name="fullName" id="fullName"
+                 placeholder="Введите имя" value="{{master.userAccount.name}}"/>
+      </div>
+
+      <div class="mb-3">
+          <label class="form-check-label" for="login">Логин:</label>
+          <input class="form-control"  type="text" name="login" id="login"
+                 placeholder="Введите логин" value="{{master.userAccount.username}}"/>
+      </div>
+
+      <div class="mb-3">
+          <label class="form-check-label" for="password">Пароль:</label>
+          <input class="form-control"  type="password" name="password" id="password"
+                 placeholder="Введите пароль" />
+      </div>
+
+      <div class="mb-3">
+          <label class="form-check-label" for="password_confirm">Повторите пароль:</label>
+          <input class="form-control"  type="password" name="password_confirm" id="password_confirm"
+                 placeholder="Введите пароль" />
+      </div>
+
+      <div class="mb-3">
+          <label class="form-check-label" for="email">Email:</label>
+          <input class="form-control"  type="email" name="email" id="email"
+                 placeholder="Введите email" value="{{master.userAccount.email}}"/>
+      </div>
+
+      <div class="mb-3">
+          <label class="form-check-label" for="phone">Телефон:</label>
+          <input class="form-control"  type="tel" name="phone" id="phone"
+                 placeholder="Введите телефон" value="{{master.userAccount.phone}}"/>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-check-label" for="description">Подробная информация об мастере:</label>
+        <textarea class="form-control" id="description" name="description"
+                  placeholder="Описание мастера">{{master.description}}</textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-check-label" for="services">Услуги, которые мастер может
+          предоставлять:</label>
+        <select data-placeholder="Выберите услугу..." id="services"
+                class="form-control form-control-lg" name="services" multiple>
+          {{#servicesSelected}}
+            <option name="{{id}}" value="{{id}}" selected="{{selected}}">{{title}}</option>
+          {{/servicesSelected}}
+          {{#services}}
+            <option name="{{id}}" value="{{id}}">{{title}}</option>
+          {{/services}}
+          {{^services}}
+            <option disabled>Нет подходящих сервисов :(</option>
+          {{/services}}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a class="btn btn-danger" href="/admin/master">Отменить</a>
+      </div>
+    </form>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#services').chosen({width: "100%", no_results_text: "Oops, nothing found!"});
+      });
+    </script>
+  </div>
+</div>
+</body>
+
+</html>

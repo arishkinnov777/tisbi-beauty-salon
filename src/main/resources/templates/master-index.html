@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{{>layout/header}}
+
+<body>
+<div class="container">
+
+  {{>layout/header-visible}}
+
+  <nav class="navbar navbar-expand-lg" style="background-color: #e3fde6;">
+    <div class="container-fluid">
+      <div class="navbar-brand">Рабочий кабинет мастера [{{userDetails}}]</div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a href="/master/" class="nav-link active">Заказы</a>
+          </li>
+          {{#hasAdminAuthority}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Кабинет администратора
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/admin/">Заказы</a></li>
+              <li><a class="dropdown-item" href="/admin/master">Мастера</a></li>
+              <li><a class="dropdown-item" href="/admin/reports">Отчеты</a></li>
+            </ul>
+          </li>
+          {{/hasAdminAuthority}}
+          {{^hasAdminAuthority}}
+          <li class="nav-item">
+            <a class="nav-link disabled">Кабинет администратора</a>
+          </li>
+          {{/hasAdminAuthority}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {{>layout/beradcrumbs}}
+
+  <div class="container-fluid mt-3">
+    {{#hasOrders}}
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Дата создания</th>
+        <th>Мастер</th>
+        <th>Клиент</th>
+        <th>Услуга</th>
+        <th>Цена</th>
+        <th>Запланированная дата визита</th>
+        <th>Запланированное время</th>
+        <th>Статус</th>
+        <th>Действие</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#orders}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{createdAt}}</td>
+        <td>{{schedule.master.name}}</td>
+        <td><button type="button" class="btn btn-link" data-bs-toggle="popover" title="{{customer.name}}" data-bs-content="Телефон: {{customer.phone}}, Email: {{customer.email}}">{{customer.name}}</button></td>
+        <td>{{service.title}}</td>
+        <td>{{price}}</td>
+        <td>{{schedule.date}}</td>
+        <td>{{schedule.timeStart}}</td>
+        <td>{{status}}</td>
+        <td>
+          {{#state.NEW}}
+          <a href="/master/order/{{code}}/start">Приступить</a>
+          <a href="/master/order/{{code}}/finish">Завершить</a>
+          <a href="/master/order/{{code}}/cancel">Отменить</a>
+          {{/state.NEW}}
+          {{#state.STARTED}}
+          <a href="/master/order/{{code}}/new">Вернуть в пул</a>
+          <a href="/master/order/{{code}}/finish">Завершить</a>
+          <a href="/master/order/{{code}}/cancel">Отменить</a>
+          {{/state.STARTED}}
+        </td>
+      </tr>
+      {{/orders}}
+      </tbody>
+    </table>
+    {{/hasOrders}}
+    {{^hasOrders}}
+    <h2>Заказов не найдено</h2>
+    {{/hasOrders}}
+  </div>
+  <script type="text/javascript">
+    $(function () {
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+      const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    })
+  </script>
+</div>
+</body>
+
+</html>

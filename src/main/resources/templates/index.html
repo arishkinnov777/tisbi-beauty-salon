@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{{>layout/header}}
+
+<body>
+<div class="container">
+
+  {{>layout/header-visible}}
+
+  {{>layout/beradcrumbs}}
+
+  <div class="form-group mt-3">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Название услуги</th>
+        <th>Продолжительность</th>
+        <th>Цена</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#services}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{duration}}</td>
+        <td>{{price}}</td>
+        <td><a href="/order/service/{{id}}">Записаться</a></td>
+      </tr>
+      {{/services}}
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+
+</html>

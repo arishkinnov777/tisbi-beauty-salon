@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{{>layout/header}}
+
+<body>
+<div class="container">
+
+  {{>layout/header-visible}}
+
+  <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+      <div class="navbar-brand">Панель администратора [{{userDetails}}]</div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a href="/admin/" class="nav-link">Заказы</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/master" class="nav-link active">Мастера</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/reports" class="nav-link">Отчеты</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              Кабинет мастера
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/master/">Заказы</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="container-fluid">
+          <a class="btn btn-outline-success" href="/admin/master/add">Добавить</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {{>layout/beradcrumbs}}
+
+  <div class="container-fluid mt-3">
+    {{#hasMasters}}
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Имя</th>
+        <th>Логин</th>
+        <th>Email</th>
+        <th>Телефон</th>
+        <th>Услуги</th>
+        <th>Активирован?</th>
+        <th>Действие</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#masters}}
+      <tr>
+        <td>{{name}}</td>
+        <td>{{userAccount.username}}</td>
+        <td>{{userAccount.email}}</td>
+        <td>{{userAccount.phone}}</td>
+        <td>
+          {{#services}}
+          <span class="badge text-bg-success">{{title}}</span>
+          {{/services}}
+        </td>
+        <td>{{statusActivate}}</td>
+        <td><a href="/admin/master/{{id}}/edit">Редактировать</a></td>
+        <td><a href="/admin/master/{{id}}/delete">Удалить</a></td>
+      </tr>
+      {{/masters}}
+      </tbody>
+    </table>
+    {{/hasMasters}}
+    {{^hasMasters}}
+    <h2>Мастеров не найдено</h2>
+    {{/hasMasters}}
+  </div>
+  <script type="text/javascript">
+    $(function () {
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+      const popoverList = [...popoverTriggerList].map(
+          popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    })
+  </script>
+</div>
+</body>
+
+</html>
