@@ -77,14 +77,13 @@
         <td>{{status}}</td>
         <td>
           {{#state.NEW}}
-          <a href="/master/order/{{code}}/start">Приступить</a>
-          <a href="/master/order/{{code}}/finish">Завершить</a>
-          <a href="/master/order/{{code}}/cancel">Отменить</a>
+          <a class="btn btn-outline-primary m-2" href="/master/order/{{code}}/start">Приступить</a>
+          <a class="btn btn-outline-danger m-2" href="/master/order/{{code}}/cancel">Отменить</a>
           {{/state.NEW}}
           {{#state.STARTED}}
-          <a href="/master/order/{{code}}/new">Вернуть в пул</a>
-          <a href="/master/order/{{code}}/finish">Завершить</a>
-          <a href="/master/order/{{code}}/cancel">Отменить</a>
+          <a class="btn btn-outline-primary m-2" href="/master/order/{{code}}/new">Вернуть в пул</a>
+          <a class="btn btn-outline-success m-2" href="/master/order/{{code}}/finish">Завершить</a>
+          <a class="btn btn-outline-danger m-2" href="/master/order/{{code}}/cancel">Отменить</a>
           {{/state.STARTED}}
         </td>
       </tr>
