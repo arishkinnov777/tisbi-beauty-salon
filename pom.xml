@@ -11,7 +11,7 @@
   </parent>
   <groupId>ru.novikova.av.tisbi</groupId>
   <artifactId>beauty-salon</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>beauty-salon</name>
   <description>beauty-salon</description>
   <properties>

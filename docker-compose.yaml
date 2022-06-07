@@ -12,6 +12,14 @@ services:
     volumes:
       - $PWD/deployment/db/beauty-salon.sql:/docker-entrypoint-initdb.d/00_init_beauty-salon.sql
       - postgre:/var/lib/postgresql/data
+
+  beauty-salon:
+    build: .
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgre:5432/beauty_salon
+    ports:
+      - '8082:8080'
+
 volumes:
   postgre:
     driver: local
