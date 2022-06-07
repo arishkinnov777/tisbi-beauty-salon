@@ -8,7 +8,7 @@ create table if not exists salon.users
     username  varchar(63)  not null unique,
     password  varchar(100) not null,
     email     varchar(255),
-    phone     varchar(11),
+    phone     varchar(14),
     active    boolean default false
 );
 
