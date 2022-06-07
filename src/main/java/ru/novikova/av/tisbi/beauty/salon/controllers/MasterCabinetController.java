@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.novikova.av.tisbi.beauty.salon.controllers.constants.OrderStatus;
 import ru.novikova.av.tisbi.beauty.salon.controllers.constants.PageBreadcrumbs;
 import ru.novikova.av.tisbi.beauty.salon.controllers.utils.PageParametersUtils;
 import ru.novikova.av.tisbi.beauty.salon.domain.Order;
@@ -29,11 +30,12 @@ public class MasterCabinetController {
     HashMap<String, Object> params = new HashMap<>();
     List<Order> orders = new ArrayList<>();
 
-    ordersRepository.findAllOrderById()
-        .forEach(o -> orders.add(Order.from(o)));
-
     PageParametersUtils.enableBreadcrumbs(PageBreadcrumbs.MASTER, params);
     PageParametersUtils.fillUserDetails(params);
+
+    String login = (String) params.get("username");
+    ordersRepository.getMasterOrders(login)
+        .forEach(o -> orders.add(Order.from(o)));
 
     params.put("headTitle", "Салон красоты");
     params.put("hasOrders", !orders.isEmpty());
@@ -44,7 +46,7 @@ public class MasterCabinetController {
   @RequestMapping("/order/{orderCode}/new")
   public RedirectView todo(@PathVariable("orderCode") String orderCode) {
     OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
-    order.setStatus("NEW");
+    order.setStatus(OrderStatus.NEW.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");
   }
@@ -52,7 +54,7 @@ public class MasterCabinetController {
   @RequestMapping("/order/{orderCode}/start")
   public RedirectView start(@PathVariable("orderCode") String orderCode) {
     OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
-    order.setStatus("STARTED");
+    order.setStatus(OrderStatus.STARTED.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");
   }
@@ -60,7 +62,7 @@ public class MasterCabinetController {
   @RequestMapping("/order/{orderCode}/finish")
   public RedirectView finish(@PathVariable("orderCode") String orderCode) {
     OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
-    order.setStatus("DONE");
+    order.setStatus(OrderStatus.DONE.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");
   }
@@ -68,7 +70,7 @@ public class MasterCabinetController {
   @RequestMapping("/order/{orderCode}/cancel")
   public RedirectView cancel(@PathVariable("orderCode") String orderCode) {
     OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
-    order.setStatus("CANCEL");
+    order.setStatus(OrderStatus.CANCEL.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");
   }

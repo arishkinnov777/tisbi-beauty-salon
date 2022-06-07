@@ -12,8 +12,15 @@ import ru.novikova.av.tisbi.beauty.salon.domain.entity.OrdersEntity;
 @Repository
 public interface OrdersRepository extends CrudRepository<OrdersEntity, UUID> {
 
+  @Query("select o from OrdersEntity o "
+      + "inner join ScheduleEntity s on s.id = o.schedule.id "
+      + "inner join MastersEntity m on s.master.id = m.id "
+      + "inner join UserEntity u on m.user.id = u.id and u.username = :username "
+      + "order by o.id")
+  List<OrdersEntity> getMasterOrders(@Param("username") String username);
+
   @Query("select o from OrdersEntity o order by o.id")
-  List<OrdersEntity> findAllOrderById();
+  List<OrdersEntity> getAllOrders();
 
   OrdersEntity findByCodeOrderById(UUID fromString);
 

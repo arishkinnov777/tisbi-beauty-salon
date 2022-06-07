@@ -9,6 +9,8 @@
 
   {{>layout/header-visible}}
 
+  {{>menu/main-menu}}
+
   {{>layout/beradcrumbs}}
 
   <div class="form-group mt-3">
@@ -25,7 +27,7 @@
       {{#services}}
       <tr>
         <td>{{title}}</td>
-        <td>{{duration}}</td>
+        <td>{{durationFormatted}}</td>
         <td>{{price}}</td>
         <td><a class="btn btn-outline-success" href="/order/service/{{id}}">Записаться</a></td>
       </tr>

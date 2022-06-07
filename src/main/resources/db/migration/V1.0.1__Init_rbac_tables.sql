@@ -5,7 +5,7 @@ create table if not exists salon.users
 (
     id        uuid         not null primary key unique,
     full_name varchar(255),
-    username  varchar(100) not null unique,
+    username  varchar(63)  not null unique,
     password  varchar(100) not null,
     email     varchar(255),
     phone     varchar(11),
@@ -17,9 +17,9 @@ grant delete, trigger, insert, select, update on salon.users to beauty_salon_app
 -- создаем таблицу для хранения ролей
 create table if not exists salon.role
 (
-    id   uuid          not null primary key unique,
-    code varchar(100)  not null unique,
-    name varchar(1000) not null
+    id   uuid         not null primary key unique,
+    code varchar(63)  not null unique,
+    name varchar(255) not null
 );
 
 grant delete, trigger, insert, select, update on salon.role to beauty_salon_application;
@@ -28,9 +28,9 @@ grant delete, trigger, insert, select, update on salon.role to beauty_salon_appl
 -- создаем таблицу для хранения разрешений
 create table if not exists salon.privilege
 (
-    id   uuid          not null primary key unique,
-    code varchar(100)  not null unique,
-    name varchar(1000) not null
+    id   uuid         not null primary key unique,
+    code varchar(63)  not null unique,
+    name varchar(255) not null
 );
 
 grant delete, trigger, insert, select, update on salon.privilege to beauty_salon_application;
@@ -38,8 +38,8 @@ grant delete, trigger, insert, select, update on salon.privilege to beauty_salon
 -- создаем таблицу для хранения связей ролей и разрешений
 create table if not exists salon.role_privileges
 (
-    id            uuid not null primary key unique,
-    role_id       uuid references role (id),
+    id           uuid not null primary key unique,
+    role_id      uuid references role (id),
     privilege_id uuid references privilege (id)
 );
 

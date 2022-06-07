@@ -3,6 +3,7 @@ package ru.novikova.av.tisbi.beauty.salon.domain;
 import java.sql.Time;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import ru.novikova.av.tisbi.beauty.salon.controllers.utils.DateTimeFormatUtils;
 import ru.novikova.av.tisbi.beauty.salon.domain.entity.ServiceEntity;
 
 public record Service(UUID id,
@@ -19,9 +20,7 @@ public record Service(UUID id,
         entity.getName(),
         entity.getDescription(),
         entity.getDuration(),
-        entity.getDuration().toLocalTime().format(
-            DateTimeFormatter.ISO_TIME
-        ),
+        DateTimeFormatUtils.formatTime(entity.getDuration().toLocalTime()),
         entity.getPrice(),
         selected
     );

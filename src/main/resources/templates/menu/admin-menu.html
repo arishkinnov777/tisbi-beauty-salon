@@ -1,0 +1,30 @@
+{{#userAuthenticated}}
+<nav class="navbar navbar-expand-lg" style="background-color: #fde3eb;">
+  <div class="container-fluid">
+    <div class="navbar-brand">Панель администратора [{{userDetails}}]</div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a href="/admin/" class="nav-link active">Заказы</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/master" class="nav-link">Мастера</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Кабинет мастера
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/master/">Заказы</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{{/userAuthenticated}}

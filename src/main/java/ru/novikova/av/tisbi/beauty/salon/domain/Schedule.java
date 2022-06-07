@@ -13,7 +13,7 @@ public record Schedule(UUID id,
                        Time timeStart,
                        String timeStartFormatted,
                        Time timeStop,
-                       String status) {
+                       Boolean isReserved) {
 
   public static Schedule from(ScheduleEntity entity) {
     return new Schedule(
@@ -28,7 +28,7 @@ public record Schedule(UUID id,
             DateTimeFormatter.ISO_TIME
         ),
         entity.getTimeslot().getTimeStop(),
-        entity.getStatus()
+        entity.getReserved()
     );
   }
 }

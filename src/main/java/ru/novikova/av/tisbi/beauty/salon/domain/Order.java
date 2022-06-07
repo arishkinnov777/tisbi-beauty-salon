@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
+import ru.novikova.av.tisbi.beauty.salon.controllers.constants.OrderStatus;
 import ru.novikova.av.tisbi.beauty.salon.domain.entity.OrdersEntity;
 
 public record Order(Integer id,
@@ -25,7 +26,7 @@ public record Order(Integer id,
         Service.from(entity.getService(), false),
         Customer.from(entity.getUser()),
         Schedule.from(entity.getSchedule()),
-        entity.getStatus(),
+        OrderStatus.valueOf(entity.getStatus()).getDisplayValue(),
         entity.getPrice(),
         entity.getCreatedAt(),
         entity.getCreatedAt().toLocalDateTime().format(

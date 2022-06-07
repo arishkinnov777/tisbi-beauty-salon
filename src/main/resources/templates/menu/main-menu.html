@@ -1,0 +1,34 @@
+{{#userAuthenticated}}
+<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+  <div class="container-fluid">
+    <div class="navbar-brand">Панель управления [{{userDetails}}]</div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {{#hasMasterAuthority}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            Кабинет мастера
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/master/">Заказы</a></li>
+          </ul>
+        </li>
+        {{/hasMasterAuthority}}
+        {{#hasAdminAuthority}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Кабинет администратора
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/admin/">Заказы</a></li>
+            <li><a class="dropdown-item" href="/admin/master">Мастера</a></li>
+            <li><a class="dropdown-item" href="/admin/reports">Отчеты</a></li>
+          </ul>
+        </li>
+        {{/hasAdminAuthority}}
+      </ul>
+    </div>
+  </div>
+</nav>
+{{/userAuthenticated}}

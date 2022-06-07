@@ -1,5 +1,7 @@
 package ru.novikova.av.tisbi.beauty.salon.controllers.admin;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,7 +62,7 @@ public class AdminController {
 
     List<Order> orders = new ArrayList<>();
 
-    ordersRepository.findAllOrderById()
+    ordersRepository.getAllOrders()
         .forEach(o -> orders.add(Order.from(o)));
 
     params.put("headTitle", "Салон красоты");

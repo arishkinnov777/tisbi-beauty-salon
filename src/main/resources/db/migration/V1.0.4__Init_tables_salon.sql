@@ -12,7 +12,7 @@ grant delete, trigger, insert, select, update on salon.masters to beauty_salon_a
 create table if not exists salon.service
 (
     id          uuid not null primary key unique,
-    name        varchar(255),
+    name        varchar(63),
     description text,
     duration    time,
     price       integer
@@ -47,7 +47,7 @@ create table if not exists salon.schedule
     master_id     uuid references masters (id),
     timeslot_id   uuid references timeslot (id),
     date_timeslot date,
-    status        varchar(100)
+    is_reserved   boolean default false
 );
 grant delete, trigger, insert, select, update on salon.schedule to beauty_salon_application;
 
@@ -60,7 +60,7 @@ create table if not exists salon.orders
     service_id  uuid references service (id),
     user_id     uuid references users (id),
     price       integer,
-    status      varchar(100),
+    status      varchar(63),
     created_at  timestamp,
     updated_at  timestamp,
     schedule_id uuid references schedule (id)

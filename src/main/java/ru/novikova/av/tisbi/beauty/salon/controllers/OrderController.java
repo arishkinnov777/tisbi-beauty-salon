@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.novikova.av.tisbi.beauty.salon.controllers.constants.OrderStatus;
 import ru.novikova.av.tisbi.beauty.salon.controllers.constants.PageBreadcrumbs;
 import ru.novikova.av.tisbi.beauty.salon.controllers.utils.PageParametersUtils;
 import ru.novikova.av.tisbi.beauty.salon.domain.Master;
@@ -124,13 +125,16 @@ public class OrderController {
         .setCode(UUID.randomUUID())
         .setService(service)
         .setPrice(service.getPrice())
-        .setStatus("NEW")
+        .setStatus(OrderStatus.NEW.name())
         .setUser(user)
         .setCreatedAt(Timestamp.valueOf(LocalDateTime.now()))
         .setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()))
         .setSchedule(schedule);
 
     ordersRepository.save(order);
+
+    schedule.setReserved(true);
+    scheduleRepository.save(schedule);
 
     return new RedirectView("/order/" + order.getCode());
   }

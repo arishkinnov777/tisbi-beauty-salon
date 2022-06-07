@@ -30,7 +30,7 @@ public class ScheduleEntity {
   private Date dateTimeslot;
 
   @Basic
-  @Column(name = "status")
-  private String status;
+  @Column(name = "is_reserved")
+  private Boolean reserved;
 
 }

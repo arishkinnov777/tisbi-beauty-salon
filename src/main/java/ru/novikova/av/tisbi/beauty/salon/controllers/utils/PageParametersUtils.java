@@ -19,12 +19,21 @@ public final class PageParametersUtils {
       UserDetails userDetails = principal instanceof UserDetails ? (UserDetails) principal : null;
       if (userDetails != null) {
         params.put("userDetails", userDetails.getUsername());
+        params.put("username", userDetails.getUsername());
         params.put("userAuthenticated", true);
+
         userDetails.getAuthorities().stream()
             .filter(grantedAuthority -> grantedAuthority.getAuthority().equals("canAdminPanelUse"))
             .findAny()
             .ifPresent(grantedAuthority ->
                 params.put("hasAdminAuthority", true)
+            );
+
+        userDetails.getAuthorities().stream()
+            .filter(grantedAuthority -> grantedAuthority.getAuthority().equals("canMasterCabinetUse"))
+            .findAny()
+            .ifPresent(grantedAuthority ->
+                params.put("hasMasterAuthority", true)
             );
       } else {
         params.put("userAuthenticated", false);
