@@ -1,12 +1,15 @@
 package ru.novikova.av.tisbi.beauty.salon.controllers.utils;
 
+import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.novikova.av.tisbi.beauty.salon.controllers.constants.PageBreadcrumbs;
 
+@Slf4j
 public final class PageParametersUtils {
 
   private PageParametersUtils() {}
@@ -20,27 +23,24 @@ public final class PageParametersUtils {
       if (userDetails != null) {
         params.put("userDetails", userDetails.getUsername());
         params.put("username", userDetails.getUsername());
-        params.put("userAuthenticated", true);
+        params.put("userAuthenticated", Boolean.TRUE);
 
-        userDetails.getAuthorities().stream()
-            .filter(grantedAuthority -> grantedAuthority.getAuthority().equals("canAdminPanelUse"))
-            .findAny()
-            .ifPresent(grantedAuthority ->
-                params.put("hasAdminAuthority", true)
-            );
-
-        userDetails.getAuthorities().stream()
-            .filter(grantedAuthority -> grantedAuthority.getAuthority().equals("canMasterCabinetUse"))
-            .findAny()
-            .ifPresent(grantedAuthority ->
-                params.put("hasMasterAuthority", true)
-            );
+        userDetails.getAuthorities().forEach(
+            a  -> {
+              String authority = a.getAuthority();
+              log.info("has authority {}", authority);
+              switch (authority) {
+                case "canAdminPanelUse" -> params.put("hasAdminAuthority", Boolean.TRUE);
+                case "canMasterCabinetUse" -> params.put("hasMasterAuthority", Boolean.TRUE);
+              }
+            }
+        );
       } else {
-        params.put("userAuthenticated", false);
+        params.put("userAuthenticated", Boolean.FALSE);
         params.put("userDetails", "");
       }
     } else {
-      params.put("userAuthenticated", false);
+      params.put("userAuthenticated", Boolean.FALSE);
       params.put("userDetails", "");
     }
   }

@@ -36,6 +36,9 @@ public class HomeController {
 
     params.put("headTitle", "Салон красоты");
     params.put("services", services);
+    params.forEach(
+        (k, v) -> log.info("{} = {}", k, v)
+    );
     return new ModelAndView("index", params);
   }
 }

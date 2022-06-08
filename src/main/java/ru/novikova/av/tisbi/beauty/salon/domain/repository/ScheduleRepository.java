@@ -13,7 +13,8 @@ import ru.novikova.av.tisbi.beauty.salon.domain.entity.ScheduleEntity;
 public interface ScheduleRepository extends CrudRepository<ScheduleEntity, UUID> {
 
   @Query("select s from ScheduleEntity s "
-      + "where s.master.id = :masterId and s.reserved = false and s.dateTimeslot >= :date")
+      + "where s.master.id = :masterId and s.reserved = false and s.dateTimeslot >= :date "
+      + "order by s.timeslot.timeStart")
   List<ScheduleEntity> findFreeSlotsByMasterId(@Param("masterId") UUID masterId, @Param("date") Date date);
 
   List<ScheduleEntity> findAllByMasterId(UUID masterUID);
