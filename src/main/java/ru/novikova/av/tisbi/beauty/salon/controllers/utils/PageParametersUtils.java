@@ -29,10 +29,12 @@ public final class PageParametersUtils {
             a  -> {
               String authority = a.getAuthority();
               log.info("has authority {}", authority);
+
               switch (authority) {
                 case "canAdminPanelUse" -> params.put("hasAdminAuthority", Boolean.TRUE);
                 case "canMasterCabinetUse" -> params.put("hasMasterAuthority", Boolean.TRUE);
               }
+
             }
         );
       } else {

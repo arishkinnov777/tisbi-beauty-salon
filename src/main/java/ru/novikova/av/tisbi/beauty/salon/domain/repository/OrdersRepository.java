@@ -16,16 +16,18 @@ public interface OrdersRepository extends CrudRepository<OrdersEntity, UUID> {
       + "inner join ScheduleEntity s on s.id = o.schedule.id "
       + "inner join MastersEntity m on s.master.id = m.id "
       + "inner join UserEntity u on m.user.id = u.id and u.username = :username "
-      + "order by o.id")
+      + "order by s.dateTimeslot desc, s.timeslot.timeStart asc")
   List<OrdersEntity> getMasterOrders(@Param("username") String username);
 
-  @Query("select o from OrdersEntity o order by o.id")
+  @Query("select o from OrdersEntity o "
+      + "order by o.createdAt desc ")
   List<OrdersEntity> getAllOrders();
 
-  OrdersEntity findByCodeOrderById(UUID fromString);
+  OrdersEntity findByCode(UUID fromString);
 
   @Modifying
-  @Query(value = "delete from salon.orders o where o.schedule_id = :scheduleId", nativeQuery = true)
+  @Query(value = "delete from salon.orders o where o.schedule_id = :scheduleId",
+      nativeQuery = true)
   void deleteBySchedule(@Param("scheduleId") UUID id);
 
 }

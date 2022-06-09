@@ -45,7 +45,7 @@ public class MasterCabinetController {
 
   @RequestMapping("/order/{orderCode}/new")
   public RedirectView todo(@PathVariable("orderCode") String orderCode) {
-    OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
+    OrdersEntity order = ordersRepository.findByCode(UUID.fromString(orderCode));
     order.setStatus(OrderStatus.NEW.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");
@@ -53,7 +53,7 @@ public class MasterCabinetController {
 
   @RequestMapping("/order/{orderCode}/start")
   public RedirectView start(@PathVariable("orderCode") String orderCode) {
-    OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
+    OrdersEntity order = ordersRepository.findByCode(UUID.fromString(orderCode));
     order.setStatus(OrderStatus.STARTED.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");
@@ -61,7 +61,7 @@ public class MasterCabinetController {
 
   @RequestMapping("/order/{orderCode}/finish")
   public RedirectView finish(@PathVariable("orderCode") String orderCode) {
-    OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
+    OrdersEntity order = ordersRepository.findByCode(UUID.fromString(orderCode));
     order.setStatus(OrderStatus.DONE.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");
@@ -69,7 +69,7 @@ public class MasterCabinetController {
 
   @RequestMapping("/order/{orderCode}/cancel")
   public RedirectView cancel(@PathVariable("orderCode") String orderCode) {
-    OrdersEntity order = ordersRepository.findByCodeOrderById(UUID.fromString(orderCode));
+    OrdersEntity order = ordersRepository.findByCode(UUID.fromString(orderCode));
     order.setStatus(OrderStatus.CANCEL.name());
     ordersRepository.save(order);
     return new RedirectView("/master/");

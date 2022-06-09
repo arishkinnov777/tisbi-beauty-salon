@@ -79,7 +79,7 @@ public class OrderController {
   public ModelAndView getOrder(@PathVariable(name = "order_id") String orderId) {
     Map<String, Object> params = new HashMap<>();
 
-    Order order = Order.from(ordersRepository.findByCodeOrderById(UUID.fromString(orderId)));
+    Order order = Order.from(ordersRepository.findByCode(UUID.fromString(orderId)));
 
     PageParametersUtils.enableBreadcrumbs(PageBreadcrumbs.ORDER_VIEW, params);
     PageParametersUtils.fillUserDetails(params);
